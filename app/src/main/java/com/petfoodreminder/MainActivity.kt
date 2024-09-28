@@ -64,7 +64,10 @@ class MainActivity : ComponentActivity() {
                 },
                 onDeletePet = { pet ->
                     deletePet(pet)  // Eliminar la mascota de la base de datos
-                }
+                },
+                onAddPetClick = {
+                    showAddPetScreen = true
+                },
             )
             // Mostrar diálogo para agregar bolsa si el estado es verdadero
             if (showAddFoodBagDialog) {

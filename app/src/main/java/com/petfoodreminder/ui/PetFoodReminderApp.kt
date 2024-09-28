@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.petfoodreminder.data.model.FoodBag
 import com.petfoodreminder.data.model.Pet
@@ -30,38 +31,63 @@ fun PetFoodReminderApp(
     onCancelAddPet: () -> Unit,
     showFoodBagDetails: Boolean,  // Nuevo estado para mostrar los detalles de la bolsa
     onBackFromDetails: () -> Unit,  // Acción para volver a la lista desde los detalles
-    onDeletePet: (Pet) -> Unit
+    onDeletePet: (Pet) -> Unit,
+    onAddPetClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = "Pet Food Reminder",
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
+                    if (showFoodBagDetails) {
+                        Text(
+                            text = "Detalle de la comida",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    } else {
+                        Text(
+                            text = "Comida de tus mascotas",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+
+                    }
                 },
                 actions = {
                     // Botón rectangular con el texto "Agregar Bolsa" y bordes redondeados
-                    Button(
-                        onClick = onAddFoodBagClick,
-                        shape = MaterialTheme.shapes.small,  // Bordes redondeados
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.secondary,  // Color de fondo del botón
-                            contentColor = MaterialTheme.colorScheme.onSecondary  // Color del texto del botón
-                        ),
-                        modifier = Modifier.padding(end = 16.dp)
-                    ) {
-                        Text(text = "Agregar Bolsa")
+                    if (!showAddPetScreen && !showFoodBagDetails) {
+                        IconButton(
+                            onClick = onAddFoodBagClick,
+                            //shape = MaterialTheme.shapes.small,  // Bordes redondeados
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Agregar Bolsa",
+                                tint = Color.White,
+                            )
+                        }
                     }
+                    if (showFoodBagDetails) {
+                        IconButton(
+                            onClick = onAddPetClick,
+                            //shape = MaterialTheme.shapes.small,  // Bordes redondeados
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "mascota",
+                                tint = Color.White,
+                                // Color del ícono
+                            )
+                        }
+                    }
+
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,  // Color de fondo
                     titleContentColor = MaterialTheme.colorScheme.onPrimary  // Color del título
                 ),
 
-            )
+                )
         },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
@@ -75,6 +101,7 @@ fun PetFoodReminderApp(
                             onCancel = onCancelAddPet
                         )
                     }
+
                     showFoodBagDetails && selectedFoodBag != null -> {
                         FoodBagDetailScreen(
                             foodBag = selectedFoodBag,
@@ -83,6 +110,7 @@ fun PetFoodReminderApp(
                             onDeletePet = onDeletePet
                         )
                     }
+
                     else -> {
                         FoodBagListScreen(
                             foodBagsFlow = foodBagsFlow,

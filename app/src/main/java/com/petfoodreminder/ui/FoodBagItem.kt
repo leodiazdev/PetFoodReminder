@@ -4,8 +4,12 @@ import androidx.compose.runtime.Composable
 import com.petfoodreminder.data.model.FoodBag
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -39,15 +43,16 @@ fun FoodBagItem(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(
-                    onClick = { onDelete(foodBag) },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
-                ) {
-                    Text("Eliminar", color = MaterialTheme.colorScheme.onError)
+                IconButton(onClick = { onDelete(foodBag) }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Eliminar Bolsa",
+                        tint =  Color(0xFFFF6F61) // Color del ícono
+                    )
                 }
-                Button(onClick = onAddPetClick) {
+               /* Button(onClick = onAddPetClick) {
                     Text("Agregar Mascota")
-                }
+                }*/
             }
         }
     }

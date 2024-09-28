@@ -38,6 +38,12 @@ fun AddPetScreen(
             label = { Text("Nombre de la mascota") },
             modifier = Modifier.fillMaxWidth()
         )
+        TextField(
+            value = dailyConsumption,
+            onValueChange = { dailyConsumption = it },
+            label = { Text("Consulmo Diario") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
